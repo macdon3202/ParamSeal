@@ -34,7 +34,7 @@ def propose(c, vm, key, actor=B, value=115, rationale="Increase is within the pu
 def mocks(vm, facts=None, status=200, source=SOURCE, commit=None):
     vm.mock_web(r"^https://api\.github\.com/repos/example/policies/commits/" + COMMIT + "$", {"method":"GET", "status":200, "body":json.dumps(commit or {"sha":COMMIT})})
     vm.mock_web(r"^https://raw\.githubusercontent\.com/example/policies/" + COMMIT + r"/risk\.md$", {"method":"GET", "status":status, "body":source})
-    vm.mock_llm("PARAM_SEAL_V1", facts or {"policy_addresses_parameter":"YES", "change_permitted":"YES", "conditions_satisfied":"YES", "verdict":"COMPLIANT"})
+    vm.mock_llm("PARAM_SEAL_V2", facts or {"policy_addresses_parameter":"YES", "change_permitted":"YES", "conditions_satisfied":"YES", "verdict":"COMPLIANT"})
 
 def snapshot(c, key=None):
     out = {"counts": c.get_counts()}
@@ -160,3 +160,5 @@ def test_exact_runner_and_no_admin_surface():
     source=CONTRACT.read_text()
     assert source.splitlines()[:2]==["# v0.2.16", '# { "Depends": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6" }']
     assert "self.admin" not in source.lower() and "self.owner" not in source.lower()
+    assert "observe(policy, change)" not in source
+    assert "observe(policy_snapshot, change_snapshot)" in source

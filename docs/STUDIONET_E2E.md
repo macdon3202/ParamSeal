@@ -27,6 +27,12 @@ Authoritative final readback: registry remains `100`; no permit was activated. T
 
 This proves source failure and wrong-digest rollback only. It does not prove the happy path, which remains pending a public commit-pinned policy resource.
 
+## V1 consensus regression discovered live
+
+The first exact-source evaluation [`0xff63…9fe7`](https://explorer-studio.genlayer.com/tx/0xff630f97f7b36a44f661c6da64b0787c733056d7f943cb32a7ef2e8c990b9fe7) finalized as `MAJORITY_DISAGREE`. Authoritative readback remained `SEALED`, with `attempts=0` and registry `100`; no permit existed and no consumption was attempted.
+
+Validator diagnostics reported that reading storage-backed dataclasses in nondeterministic mode is unsupported. V2 therefore copies only bounded primitive policy/change fields during deterministic execution and passes those snapshots into the nondeterministic closure. A static regression assertion and the GenVM suite enforce this boundary. The historical V1 address is retained only as transparent failure evidence and must not be submitted as the current deployment.
+
 Required live sections:
 
 1. Exact deployed contract address, Explorer link and source SHA-256.

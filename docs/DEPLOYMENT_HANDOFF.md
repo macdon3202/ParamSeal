@@ -1,16 +1,15 @@
 # Deployment handoff
 
-The exact `contracts/param_seal.py` candidate was deployed on StudioNet from the main wallet.
+The V1 deployment exposed a live validator disagreement caused by storage-backed dataclasses being read in nondeterministic mode. V2 snapshots bounded primitive values before nondeterministic execution and requires a new exact-source deployment.
 
-- Contract version: `PARAM_SEAL_V1`
+- Contract version: `PARAM_SEAL_V2`
 - Runner: `v0.2.16`
-- Exact local source SHA-256: `d148bde64e91938f01f6f1e2f114cbc0800881c6efcd059f1d78af6117610c6c`
-- Contract: `0x78a7f78078A7f6BaF2D7cD764E9295B85a9fd6eB`
-- Explorer: <https://explorer-studio.genlayer.com/address/0x78a7f78078A7f6BaF2D7cD764E9295B85a9fd6eB>
+- Exact V2 source SHA-256: `29a6ee8e882d084fb9f4ec2149b745d21f7a0f517534f23104743b31300d9347`
+- Historical V1 contract: `0x78a7f78078A7f6BaF2D7cD764E9295B85a9fd6eB` (do not submit as current)
 - Constructor arguments: none
 - Main-wallet behavior after deployment: none
 
-The deployment manifest and production frontend environment now reference this address.
+The deployment manifest and production frontend intentionally have no active V2 address until redeployment.
 
 The live lifecycle must use the two auxiliary wallets:
 

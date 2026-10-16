@@ -1,10 +1,10 @@
 {
   "project": "ParamSeal",
-  "contract_version": "PARAM_SEAL_V1",
+  "contract_version": "PARAM_SEAL_V2",
   "runner": "v0.2.16",
-  "contract_address": "0x78a7f78078A7f6BaF2D7cD764E9295B85a9fd6eB",
+  "contract_address": null,
   "network": "StudioNet",
-  "contract_sha256": "d148bde64e91938f01f6f1e2f114cbc0800881c6efcd059f1d78af6117610c6c",
+  "contract_sha256": "29a6ee8e882d084fb9f4ec2149b745d21f7a0f517534f23104743b31300d9347",
   "local_genvm_tests": 25,
   "frontend_tests": 6,
   "live_verified": false,

@@ -13,6 +13,8 @@ def main():
     assert source.splitlines()[:2] == ["# v0.2.16", '# { "Depends": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6" }']
     assert source.count("@gl.public.write") == 7
     assert source.count("@gl.public.view") == 4
+    assert 'VERSION = "PARAM_SEAL_V2"' in source
+    assert "observe(policy, change)" not in source
     assert "wallet_getSnaps" not in (ROOT / "frontend" / "src" / "client.js").read_text(encoding="utf-8")
     documents = [ROOT / "README.md", *sorted((ROOT / "docs").rglob("*.md")), *sorted((ROOT / "samples").rglob("*.md"))]
     for document in documents:

@@ -101,7 +101,7 @@ def happy(address, client, a, b, repository, commit, path, digest):
 def main():
     if len(sys.argv)<3: raise SystemExit("usage: studionet_e2e.py CONTRACT_ADDRESS failure|happy [REPOSITORY COMMIT PATH DIGEST]")
     address,mode=sys.argv[1:3];load_wallets();a=create_account(os.environ["SERVICE_LEDGER_KEY_A"]);b=create_account(os.environ["SERVICE_LEDGER_KEY_B"]);client=create_client(chain=studionet,account=a,endpoint=RPC)
-    counts=read(client,address,a,"get_counts",[]);assert counts["version"]=="PARAM_SEAL_V1",counts
+    counts=read(client,address,a,"get_counts",[]);assert counts["version"]=="PARAM_SEAL_V2",counts
     evidence=failure(address,client,a,b) if mode=="failure" else happy(address,client,a,b,*sys.argv[3:7])
     print(json.dumps({"scenario":evidence["scenario"],"saved":True},indent=2))
 
