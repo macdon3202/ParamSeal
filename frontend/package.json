@@ -1,0 +1,20 @@
+{
+  "name": "paramseal-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5181",
+    "build": "vite build",
+    "test": "node tests/transactions.test.mjs && node tests/wallet.test.mjs",
+    "verify": "npm test && npm run build"
+  },
+  "dependencies": {
+    "genlayer-js": "1.1.8",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  },
+  "devDependencies": { "vite": "7.3.7" },
+  "overrides": { "esbuild": "0.28.1" }
+}
+

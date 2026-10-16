@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {connect} from '../src/client.js';import {studionet} from 'genlayer-js/chains';
+const account='0x'+'11'.repeat(20);
+function provider({wrong=false,changed=false}={}){const calls=[];let chain=wrong?'0x1':`0x${studionet.id.toString(16)}`;return{calls,async request({method}){calls.push(method);if(method==='eth_requestAccounts')return[account];if(method==='eth_accounts')return[changed?'0x'+'22'.repeat(20):account];if(method==='eth_chainId')return chain;if(method==='wallet_switchEthereumChain'){chain=`0x${studionet.id.toString(16)}`;return null}throw Error('Unexpected '+method)}}}
+test('plain EIP-1193 connection never calls wallet_getSnaps',async()=>{const p=provider();await connect(p);assert(!p.calls.some(x=>x.toLowerCase().includes('snap')))});
+test('wrong chain switches and account mutation fails closed',async()=>{const p=provider({wrong:true});await connect(p);assert(p.calls.includes('wallet_switchEthereumChain'));await assert.rejects(connect(provider({changed:true})),/changed/)});
