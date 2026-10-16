@@ -2,7 +2,7 @@
   "project": "ParamSeal",
   "contract_version": "PARAM_SEAL_V1",
   "runner": "v0.2.16",
-  "contract_address": null,
+  "contract_address": "0x78a7f78078A7f6BaF2D7cD764E9295B85a9fd6eB",
   "network": "StudioNet",
   "contract_sha256": "d148bde64e91938f01f6f1e2f114cbc0800881c6efcd059f1d78af6117610c6c",
   "local_genvm_tests": 25,
