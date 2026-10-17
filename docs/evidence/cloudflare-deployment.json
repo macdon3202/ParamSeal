@@ -1,0 +1,18 @@
+{
+  "provider": "Cloudflare Pages",
+  "project": "paramseal",
+  "production_branch": "main",
+  "production_url": "https://paramseal.pages.dev/",
+  "immutable_deployment_url": "https://866aa80d.paramseal.pages.dev/",
+  "deployed_at_utc": "2026-10-17T07:30:00Z",
+  "verified_at_utc": "2026-10-17T07:31:15.0528941Z",
+  "production_http_status": 200,
+  "production_bundle": "/assets/index-u1QKTkYn.js",
+  "production_bundle_bytes": 726198,
+  "expected_contract": "0x8437c9d9FecbEcC8d0E4cdEDa6Fcbb4f0e5170b8",
+  "contract_address_found_in_bundle": true,
+  "contract_version": "PARAM_SEAL_V3",
+  "contract_version_found_in_bundle": true,
+  "immutable_url_verification": "PENDING_TLS_PROPAGATION",
+  "notes": "Wrangler reported a successful five-file upload and deployment. The production alias returned HTTP 200 and served a bundle bound to the exact V3 address and version. The newly issued immutable hostname returned a temporary TLS handshake failure during immediate post-deploy verification."
+}

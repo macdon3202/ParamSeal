@@ -1,5 +1,7 @@
 # ParamSeal — AI-Assisted Governance Parameter Change Gate
 
+Live application: https://paramseal.pages.dev
+
 ParamSeal binds a Web3 parameter proposal to an immutable policy revision, asks GenLayer validators to independently assess the exact source, and issues a single-use permit only when semantic and deterministic constraints both pass. The permit updates a protected on-contract registry, so the verdict has a real downstream consequence rather than producing a decorative receipt.
 
 ## Why GenLayer
@@ -56,5 +58,5 @@ Local GenVM tests execute the submitted public contract entrypoints with sender 
 
 ## Current status
 
-V3 is deployed and the StudioNet live suite has passed using two auxiliary wallets. See `docs/STUDIONET_E2E.md` for the sole current deployment and Explorer-linked transaction evidence. Historical V1 and V2 deployments are retained only for the audit trail.
+V3 is deployed and the StudioNet live suite has passed using two auxiliary wallets. The production frontend is deployed at `https://paramseal.pages.dev` and its served bundle was verified against the V3 contract address and version marker. See `docs/STUDIONET_E2E.md` for the sole current deployment and Explorer-linked transaction evidence. Historical V1 and V2 deployments are retained only for the audit trail.
 

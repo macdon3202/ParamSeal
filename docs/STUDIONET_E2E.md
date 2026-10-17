@@ -2,6 +2,8 @@
 
 Status: **V3 LIVE SUITE PASS**
 
+- Production frontend: [https://paramseal.pages.dev](https://paramseal.pages.dev)
+- Cloudflare publication receipt: [cloudflare-deployment.json](./evidence/cloudflare-deployment.json)
 - Current contract: [`0x8437c9d9FecbEcC8d0E4cdEDa6Fcbb4f0e5170b8`](https://explorer-studio.genlayer.com/address/0x8437c9d9FecbEcC8d0E4cdEDa6Fcbb4f0e5170b8)
 - Version: `PARAM_SEAL_V3`
 - Contract source SHA-256: `e6502085a205ceed7eff646f232e34a5f6bd9f89e20432eea028688cd87a577f`
