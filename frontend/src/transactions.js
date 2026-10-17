@@ -1,4 +1,4 @@
-export const VERSION='PARAM_SEAL_V2';
+export const VERSION='PARAM_SEAL_V3';
 export const isAddress=x=>typeof x==='string'&&/^0x[0-9a-f]{40}$/i.test(x)&&!/^0x0{40}$/i.test(x);
 export const isDigest=(x,size=64)=>typeof x==='string'&&new RegExp(`^[0-9a-f]{${size}}$`).test(x);
 export const sameAddress=(a,b)=>typeof a==='string'&&typeof b==='string'&&a.toLowerCase()===b.toLowerCase();

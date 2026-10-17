@@ -33,6 +33,10 @@ The first exact-source evaluation [`0xff63…9fe7`](https://explorer-studio.genl
 
 Validator diagnostics reported that reading storage-backed dataclasses in nondeterministic mode is unsupported. V2 therefore copies only bounded primitive policy/change fields during deterministic execution and passes those snapshots into the nondeterministic closure. A static regression assertion and the GenVM suite enforce this boundary. The historical V1 address is retained only as transparent failure evidence and must not be submitted as the current deployment.
 
+## V2 behavioral validation and V3 digest audit
+
+V2 contract [`0x1154…Bc8A`](https://explorer-studio.genlayer.com/address/0x1154Cfa6981eF0736298fd3a2EC447d7CAA7Bc8A) passed happy, single-use replay, source failure, hard-bound conflict, stale-policy, wrong-actor and cancellation lifecycle tests. During the subsequent claim-to-invariant audit, `rationale` was identified as semantic input that was stored and evaluated but not included in `payload_digest`. V3 binds it into the exact payload and adds a regression test proving two otherwise identical proposals with different rationales have different digests. V2 evidence remains historical validation, not the final submission deployment.
+
 Required live sections:
 
 1. Exact deployed contract address, Explorer link and source SHA-256.

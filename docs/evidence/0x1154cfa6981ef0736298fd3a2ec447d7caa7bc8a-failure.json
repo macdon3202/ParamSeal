@@ -1,0 +1,160 @@
+{
+  "scenario": "SOURCE_FAILURE_AND_WRONG_DIGEST_ROLLBACK",
+  "contract": "0x1154Cfa6981eF0736298fd3a2EC447d7CAA7Bc8A",
+  "contract_url": "https://explorer-studio.genlayer.com/address/0x1154Cfa6981eF0736298fd3a2EC447d7CAA7Bc8A",
+  "wallet_a_publisher_evaluator": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+  "wallet_b_proposer": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+  "transactions": {
+    "create_namespace": {
+      "hash": "0x644cd2c8c0c9a188193d7afe4877972b22ed9e91210f7dca2837e375d98935cd",
+      "url": "https://explorer-studio.genlayer.com/tx/0x644cd2c8c0c9a188193d7afe4877972b22ed9e91210f7dca2837e375d98935cd",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "returned": "\"920c103716a1f4fd2a088b17ad35170e931be06d636e95bf35d138db4ce06880\""
+    },
+    "propose_change": {
+      "hash": "0x41b7077c31c52aa304394fac9ec54a44524c329463283283f39672ce886abf59",
+      "url": "https://explorer-studio.genlayer.com/tx/0x41b7077c31c52aa304394fac9ec54a44524c329463283283f39672ce886abf59",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "returned": "2"
+    },
+    "seal_change": {
+      "hash": "0x19c415cc0f3aefaa0f7b14045c844c77de0f5b5f53868abe2503a723dd8346a0",
+      "url": "https://explorer-studio.genlayer.com/tx/0x19c415cc0f3aefaa0f7b14045c844c77de0f5b5f53868abe2503a723dd8346a0",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "returned": "\"SEALED\""
+    },
+    "wrong_digest": {
+      "hash": "0x74263fa6491e8c8770830d3ec5d2f6bca0aa1bc1ee5e0e812c24478846e0e24e",
+      "url": "https://explorer-studio.genlayer.com/tx/0x74263fa6491e8c8770830d3ec5d2f6bca0aa1bc1ee5e0e812c24478846e0e24e",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "returned": null
+    },
+    "evaluate_missing_source": {
+      "hash": "0xb58df4d6c33287063d40eefccd631817aff316c336be901f29fe7fef6c4f4e51",
+      "url": "https://explorer-studio.genlayer.com/tx/0xb58df4d6c33287063d40eefccd631817aff316c336be901f29fe7fef6c4f4e51",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "returned": "\"INSUFFICIENT\""
+    }
+  },
+  "wrong_digest_pre": {
+    "counts": {
+      "changes": 2,
+      "policies": 2,
+      "version": "PARAM_SEAL_V2"
+    },
+    "policy": {
+      "active": true,
+      "commit": "ffffffffffffffffffffffffffffffffffffffff",
+      "max_delta": 20,
+      "maximum": 200,
+      "minimum": 50,
+      "parameter": "debt_ceiling",
+      "path": "samples/risk-policy.md",
+      "protocol_key": "920c103716a1f4fd2a088b17ad35170e931be06d636e95bf35d138db4ce06880",
+      "publisher": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+      "repository": "macdon3202/ParamSeal",
+      "source_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+      "version": 1
+    },
+    "registry": 100,
+    "change": {
+      "attempts": 0,
+      "evaluator": "0x0000000000000000000000000000000000000000",
+      "new_value": 115,
+      "old_value": 100,
+      "parameter": "debt_ceiling",
+      "payload_digest": "1c092f3e06a0c1d306a58b928215b6c60dcf33a881a423b2f0d16980a8214597",
+      "policy_version": 1,
+      "proposer": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+      "protocol_key": "920c103716a1f4fd2a088b17ad35170e931be06d636e95bf35d138db4ce06880",
+      "rationale": "Bounded update with deliberately unavailable source evidence.",
+      "reason": "EXACT_PAYLOAD_FROZEN",
+      "state": "SEALED",
+      "verdict": ""
+    }
+  },
+  "wrong_digest_post": {
+    "counts": {
+      "changes": 2,
+      "policies": 2,
+      "version": "PARAM_SEAL_V2"
+    },
+    "policy": {
+      "active": true,
+      "commit": "ffffffffffffffffffffffffffffffffffffffff",
+      "max_delta": 20,
+      "maximum": 200,
+      "minimum": 50,
+      "parameter": "debt_ceiling",
+      "path": "samples/risk-policy.md",
+      "protocol_key": "920c103716a1f4fd2a088b17ad35170e931be06d636e95bf35d138db4ce06880",
+      "publisher": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+      "repository": "macdon3202/ParamSeal",
+      "source_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+      "version": 1
+    },
+    "registry": 100,
+    "change": {
+      "attempts": 0,
+      "evaluator": "0x0000000000000000000000000000000000000000",
+      "new_value": 115,
+      "old_value": 100,
+      "parameter": "debt_ceiling",
+      "payload_digest": "1c092f3e06a0c1d306a58b928215b6c60dcf33a881a423b2f0d16980a8214597",
+      "policy_version": 1,
+      "proposer": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+      "protocol_key": "920c103716a1f4fd2a088b17ad35170e931be06d636e95bf35d138db4ce06880",
+      "rationale": "Bounded update with deliberately unavailable source evidence.",
+      "reason": "EXACT_PAYLOAD_FROZEN",
+      "state": "SEALED",
+      "verdict": ""
+    }
+  },
+  "final_readback": {
+    "counts": {
+      "changes": 2,
+      "policies": 2,
+      "version": "PARAM_SEAL_V2"
+    },
+    "policy": {
+      "active": true,
+      "commit": "ffffffffffffffffffffffffffffffffffffffff",
+      "max_delta": 20,
+      "maximum": 200,
+      "minimum": 50,
+      "parameter": "debt_ceiling",
+      "path": "samples/risk-policy.md",
+      "protocol_key": "920c103716a1f4fd2a088b17ad35170e931be06d636e95bf35d138db4ce06880",
+      "publisher": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+      "repository": "macdon3202/ParamSeal",
+      "source_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+      "version": 1
+    },
+    "registry": 100,
+    "change": {
+      "attempts": 1,
+      "evaluator": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+      "new_value": 115,
+      "old_value": 100,
+      "parameter": "debt_ceiling",
+      "payload_digest": "1c092f3e06a0c1d306a58b928215b6c60dcf33a881a423b2f0d16980a8214597",
+      "policy_version": 1,
+      "proposer": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+      "protocol_key": "920c103716a1f4fd2a088b17ad35170e931be06d636e95bf35d138db4ce06880",
+      "rationale": "Bounded update with deliberately unavailable source evidence.",
+      "reason": "SEMANTIC_FACT_UNKNOWN",
+      "state": "INSUFFICIENT",
+      "verdict": "INSUFFICIENT"
+    }
+  }
+}

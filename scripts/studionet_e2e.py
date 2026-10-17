@@ -39,7 +39,13 @@ def signals(info):
 
 def wait(client, tx, expect_success=True):
     for _ in range(220):
-        info = plain(client.get_transaction(tx)); status, consensus, execution, returned = signals(info)
+        try:
+            info = plain(client.get_transaction(tx))
+        except Exception as error:
+            print(json.dumps({"rpc_retry":tx,"error":str(error)[:160]}),flush=True)
+            time.sleep(3)
+            continue
+        status, consensus, execution, returned = signals(info)
         if status == "FINALIZED":
             success = consensus in {"MAJORITY_AGREE", "AGREE", "ACCEPTED"} and execution == "SUCCESS"
             if success != expect_success:
@@ -66,10 +72,10 @@ def returned(value):
 def snapshot(client,address,account,protocol_key,change_id):
     return {"counts":read(client,address,account,"get_counts",[]),"policy":read(client,address,account,"get_policy",[protocol_key,1]),"registry":read(client,address,account,"get_registry_value",[protocol_key,"debt_ceiling"]),"change":read(client,address,account,"get_change",[change_id])}
 
-def failure(address, client, a, b):
+def failure(address, client, a, b, existing_create=""):
     missing_commit = "f" * 40
     missing_digest = "0" * 64
-    create = send(client,address,a,"create_namespace",["failure-source","macdon3202/ParamSeal",missing_commit,"samples/risk-policy.md",missing_digest,"debt_ceiling",50,200,20,100])
+    create = wait(client,existing_create) if existing_create else send(client,address,a,"create_namespace",["failure-source","macdon3202/ParamSeal",missing_commit,"samples/risk-policy.md",missing_digest,"debt_ceiling",50,200,20,100])
     protocol_key = str(returned(create)).strip('"')
     propose = send(client,address,b,"propose_change",[protocol_key,115,"Bounded update with deliberately unavailable source evidence."])
     change_id = int(returned(propose))
@@ -98,11 +104,42 @@ def happy(address, client, a, b, repository, commit, path, digest):
     target=ROOT/"docs"/"evidence"/(address.lower()+"-happy.json");target.write_text(json.dumps(evidence,indent=2)+"\n",encoding="utf-8")
     return evidence
 
+def guards(address, client, a, b, repository, commit, path, digest):
+    scenarios = {}
+    # Deterministic hard-bound conflict: semantically plausible prose cannot override range checks.
+    create=send(client,address,a,"create_namespace",["guard-bounds",repository,commit,path,digest,"debt_ceiling",50,200,20,100]);key=str(returned(create)).strip('"')
+    propose=send(client,address,b,"propose_change",[key,201,"Attempt to exceed the exact maximum bound."]);cid=int(returned(propose));draft=read(client,address,a,"get_change",[cid]);payload=draft["payload_digest"]
+    seal=send(client,address,b,"seal_change",[cid,payload]);evaluate=send(client,address,a,"evaluate_change",[cid,payload]);bounded=snapshot(client,address,a,key,cid)
+    assert bounded["change"]["state"]=="REJECTED" and bounded["change"]["reason"]=="HARD_BOUND_VIOLATION" and bounded["registry"]==100
+    before_consume=bounded;consume=send(client,address,b,"consume_permit",[cid,payload],expect_success=False);after_consume=snapshot(client,address,a,key,cid);assert before_consume==after_consume
+    scenarios["hard_bound"]={"transactions":{"create":create,"propose":propose,"seal":seal,"evaluate":evaluate,"consume_rejected":consume},"readback":bounded,"consume_pre":before_consume,"consume_post":after_consume}
+
+    # A sealed payload bound to version 1 cannot survive a publisher revision.
+    create2=send(client,address,a,"create_namespace",["guard-stale",repository,commit,path,digest,"debt_ceiling",50,200,20,100]);key2=str(returned(create2)).strip('"')
+    propose2=send(client,address,b,"propose_change",[key2,115,"Valid-looking update that will be made stale."]);cid2=int(returned(propose2));draft2=read(client,address,a,"get_change",[cid2]);payload2=draft2["payload_digest"]
+    seal2=send(client,address,b,"seal_change",[cid2,payload2]);revise=send(client,address,a,"revise_policy",[key2,repository,commit,path,digest,50,200,20]);before_stale={"change":read(client,address,a,"get_change",[cid2]),"registry":read(client,address,a,"get_registry_value",[key2,"debt_ceiling"]),"policy_v1":read(client,address,a,"get_policy",[key2,1]),"policy_v2":read(client,address,a,"get_policy",[key2,2])}
+    stale=send(client,address,b,"evaluate_change",[cid2,payload2],expect_success=False);after_stale={"change":read(client,address,a,"get_change",[cid2]),"registry":read(client,address,a,"get_registry_value",[key2,"debt_ceiling"]),"policy_v1":read(client,address,a,"get_policy",[key2,1]),"policy_v2":read(client,address,a,"get_policy",[key2,2])};assert before_stale==after_stale
+    scenarios["stale_policy"]={"transactions":{"create":create2,"propose":propose2,"seal":seal2,"revise":revise,"stale_evaluate":stale},"pre":before_stale,"post":after_stale}
+
+    # Only proposer cancellation is accepted; cancellation is terminal.
+    create3=send(client,address,a,"create_namespace",["guard-cancel",repository,commit,path,digest,"debt_ceiling",50,200,20,100]);key3=str(returned(create3)).strip('"')
+    propose3=send(client,address,b,"propose_change",[key3,115,"Packet used to prove actor and cancellation guards."]);cid3=int(returned(propose3));draft3=read(client,address,a,"get_change",[cid3]);payload3=draft3["payload_digest"]
+    seal3=send(client,address,b,"seal_change",[cid3,payload3]);before_actor=snapshot(client,address,a,key3,cid3);wrong_actor=send(client,address,a,"cancel_change",[cid3],expect_success=False);after_actor=snapshot(client,address,a,key3,cid3);assert before_actor==after_actor
+    cancel=send(client,address,b,"cancel_change",[cid3]);cancelled=snapshot(client,address,a,key3,cid3);assert cancelled["change"]["state"]=="CANCELLED" and cancelled["registry"]==100
+    before_terminal=cancelled;terminal=send(client,address,a,"evaluate_change",[cid3,payload3],expect_success=False);after_terminal=snapshot(client,address,a,key3,cid3);assert before_terminal==after_terminal
+    scenarios["cancellation"]={"transactions":{"create":create3,"propose":propose3,"seal":seal3,"wrong_actor_cancel":wrong_actor,"proposer_cancel":cancel,"post_cancel_evaluate":terminal},"wrong_actor_pre":before_actor,"wrong_actor_post":after_actor,"cancelled":cancelled,"terminal_pre":before_terminal,"terminal_post":after_terminal}
+    evidence={"scenario":"GUARDS_CONFLICT_STALE_CANCEL","contract":address,"contract_url":f"{EXPLORER}/address/{address}","source":{"repository":repository,"commit":commit,"path":path,"sha256":digest},"wallet_a":str(a.address),"wallet_b":str(b.address),"scenarios":scenarios}
+    target=ROOT/"docs"/"evidence"/(address.lower()+"-guards.json");target.write_text(json.dumps(evidence,indent=2)+"\n",encoding="utf-8")
+    return evidence
+
 def main():
     if len(sys.argv)<3: raise SystemExit("usage: studionet_e2e.py CONTRACT_ADDRESS failure|happy [REPOSITORY COMMIT PATH DIGEST]")
     address,mode=sys.argv[1:3];load_wallets();a=create_account(os.environ["SERVICE_LEDGER_KEY_A"]);b=create_account(os.environ["SERVICE_LEDGER_KEY_B"]);client=create_client(chain=studionet,account=a,endpoint=RPC)
-    counts=read(client,address,a,"get_counts",[]);assert counts["version"]=="PARAM_SEAL_V2",counts
-    evidence=failure(address,client,a,b) if mode=="failure" else happy(address,client,a,b,*sys.argv[3:7])
+    counts=read(client,address,a,"get_counts",[]);assert counts["version"]=="PARAM_SEAL_V3",counts
+    if mode=="failure": evidence=failure(address,client,a,b,sys.argv[3] if len(sys.argv)>3 else "")
+    elif mode=="happy": evidence=happy(address,client,a,b,*sys.argv[3:7])
+    elif mode=="guards": evidence=guards(address,client,a,b,*sys.argv[3:7])
+    else: raise SystemExit("mode must be failure, happy or guards")
     print(json.dumps({"scenario":evidence["scenario"],"saved":True},indent=2))
 
 if __name__=="__main__": main()
