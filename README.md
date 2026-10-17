@@ -56,5 +56,5 @@ Local GenVM tests execute the submitted public contract entrypoints with sender 
 
 ## Current status
 
-Local implementation and build are complete. No contract address or live transaction is claimed until the exact source has been deployed and the two auxiliary wallets have completed the StudioNet lifecycle.
+V3 is deployed and the StudioNet live suite has passed using two auxiliary wallets. See `docs/STUDIONET_E2E.md` for the sole current deployment and Explorer-linked transaction evidence. Historical V1 and V2 deployments are retained only for the audit trail.
 

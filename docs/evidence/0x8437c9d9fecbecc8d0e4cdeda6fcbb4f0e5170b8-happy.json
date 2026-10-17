@@ -1,0 +1,211 @@
+{
+  "scenario": "HAPPY_AND_REPLAY",
+  "contract": "0x8437c9d9FecbEcC8d0E4cdEDa6Fcbb4f0e5170b8",
+  "contract_url": "https://explorer-studio.genlayer.com/address/0x8437c9d9FecbEcC8d0E4cdEDa6Fcbb4f0e5170b8",
+  "source": {
+    "repository": "macdon3202/ParamSeal",
+    "commit": "97c13dc9355898adf13b03271457f83c0e608b28",
+    "path": "samples/risk-policy.md",
+    "sha256": "e2090bbd7a8d537d66f95cb1475bd9f094e5aa3b2dec1f6f2351d9da6ff021e0"
+  },
+  "wallet_a_publisher_evaluator": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+  "wallet_b_proposer_consumer": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+  "transactions": {
+    "create_namespace": {
+      "hash": "0xebf9e97e854a64b5ad87eda4d6e18d4546402f10ab0efaf6541821b371c692bc",
+      "url": "https://explorer-studio.genlayer.com/tx/0xebf9e97e854a64b5ad87eda4d6e18d4546402f10ab0efaf6541821b371c692bc",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "returned": "\"1c1d68a9fa2b2c3643cd600a20a301d8c5a91657e01f013941086c4007a110a6\""
+    },
+    "propose_change": {
+      "hash": "0x01e7baf590780d3f138aed2f3eee53369de26575197638fb31e4c1166c4e39df",
+      "url": "https://explorer-studio.genlayer.com/tx/0x01e7baf590780d3f138aed2f3eee53369de26575197638fb31e4c1166c4e39df",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "returned": "1"
+    },
+    "seal_change": {
+      "hash": "0xbcf40a9cf63fb341ae287f88883073f0753e87c81c22f13f290e47522d4722f8",
+      "url": "https://explorer-studio.genlayer.com/tx/0xbcf40a9cf63fb341ae287f88883073f0753e87c81c22f13f290e47522d4722f8",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "returned": "\"SEALED\""
+    },
+    "evaluate_change": {
+      "hash": "0x279548bef88e28a639f125fced7a91b282a768fce11849914bc3f381c7922d17",
+      "url": "https://explorer-studio.genlayer.com/tx/0x279548bef88e28a639f125fced7a91b282a768fce11849914bc3f381c7922d17",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "returned": "\"APPROVED\""
+    },
+    "consume_permit": {
+      "hash": "0xfaeeee8243dd66a81bad6e2f0d4bcee7fc61e00b2263077e6af49de4aeb43ce5",
+      "url": "https://explorer-studio.genlayer.com/tx/0xfaeeee8243dd66a81bad6e2f0d4bcee7fc61e00b2263077e6af49de4aeb43ce5",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "returned": "\"CONSUMED\""
+    },
+    "replay": {
+      "hash": "0x7252acf9190a4c975d12cdd2b6983f8fe5117aa7a5bc2823c9886fadbef79f36",
+      "url": "https://explorer-studio.genlayer.com/tx/0x7252acf9190a4c975d12cdd2b6983f8fe5117aa7a5bc2823c9886fadbef79f36",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "returned": null
+    }
+  },
+  "approved_readback": {
+    "counts": {
+      "changes": 1,
+      "policies": 1,
+      "version": "PARAM_SEAL_V3"
+    },
+    "policy": {
+      "active": true,
+      "commit": "97c13dc9355898adf13b03271457f83c0e608b28",
+      "max_delta": 20,
+      "maximum": 200,
+      "minimum": 50,
+      "parameter": "debt_ceiling",
+      "path": "samples/risk-policy.md",
+      "protocol_key": "1c1d68a9fa2b2c3643cd600a20a301d8c5a91657e01f013941086c4007a110a6",
+      "publisher": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+      "repository": "macdon3202/ParamSeal",
+      "source_digest": "e2090bbd7a8d537d66f95cb1475bd9f094e5aa3b2dec1f6f2351d9da6ff021e0",
+      "version": 1
+    },
+    "registry": 100,
+    "change": {
+      "attempts": 1,
+      "evaluator": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+      "new_value": 115,
+      "old_value": 100,
+      "parameter": "debt_ceiling",
+      "payload_digest": "d39afeb7e5adc4c12db731ca7eb24130e2858c83737ad7fe41106ae6fcf72742",
+      "policy_version": 1,
+      "proposer": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+      "protocol_key": "1c1d68a9fa2b2c3643cd600a20a301d8c5a91657e01f013941086c4007a110a6",
+      "rationale": "Increase debt_ceiling by 15 within the exact published bounds.",
+      "reason": "SINGLE_USE_PERMIT_ACTIVE",
+      "state": "APPROVED",
+      "verdict": "COMPLIANT"
+    }
+  },
+  "consumed_readback": {
+    "counts": {
+      "changes": 1,
+      "policies": 1,
+      "version": "PARAM_SEAL_V3"
+    },
+    "policy": {
+      "active": true,
+      "commit": "97c13dc9355898adf13b03271457f83c0e608b28",
+      "max_delta": 20,
+      "maximum": 200,
+      "minimum": 50,
+      "parameter": "debt_ceiling",
+      "path": "samples/risk-policy.md",
+      "protocol_key": "1c1d68a9fa2b2c3643cd600a20a301d8c5a91657e01f013941086c4007a110a6",
+      "publisher": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+      "repository": "macdon3202/ParamSeal",
+      "source_digest": "e2090bbd7a8d537d66f95cb1475bd9f094e5aa3b2dec1f6f2351d9da6ff021e0",
+      "version": 1
+    },
+    "registry": 115,
+    "change": {
+      "attempts": 1,
+      "evaluator": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+      "new_value": 115,
+      "old_value": 100,
+      "parameter": "debt_ceiling",
+      "payload_digest": "d39afeb7e5adc4c12db731ca7eb24130e2858c83737ad7fe41106ae6fcf72742",
+      "policy_version": 1,
+      "proposer": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+      "protocol_key": "1c1d68a9fa2b2c3643cd600a20a301d8c5a91657e01f013941086c4007a110a6",
+      "rationale": "Increase debt_ceiling by 15 within the exact published bounds.",
+      "reason": "REGISTRY_UPDATED_EXACTLY_ONCE",
+      "state": "CONSUMED",
+      "verdict": "COMPLIANT"
+    }
+  },
+  "replay_pre": {
+    "counts": {
+      "changes": 1,
+      "policies": 1,
+      "version": "PARAM_SEAL_V3"
+    },
+    "policy": {
+      "active": true,
+      "commit": "97c13dc9355898adf13b03271457f83c0e608b28",
+      "max_delta": 20,
+      "maximum": 200,
+      "minimum": 50,
+      "parameter": "debt_ceiling",
+      "path": "samples/risk-policy.md",
+      "protocol_key": "1c1d68a9fa2b2c3643cd600a20a301d8c5a91657e01f013941086c4007a110a6",
+      "publisher": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+      "repository": "macdon3202/ParamSeal",
+      "source_digest": "e2090bbd7a8d537d66f95cb1475bd9f094e5aa3b2dec1f6f2351d9da6ff021e0",
+      "version": 1
+    },
+    "registry": 115,
+    "change": {
+      "attempts": 1,
+      "evaluator": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+      "new_value": 115,
+      "old_value": 100,
+      "parameter": "debt_ceiling",
+      "payload_digest": "d39afeb7e5adc4c12db731ca7eb24130e2858c83737ad7fe41106ae6fcf72742",
+      "policy_version": 1,
+      "proposer": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+      "protocol_key": "1c1d68a9fa2b2c3643cd600a20a301d8c5a91657e01f013941086c4007a110a6",
+      "rationale": "Increase debt_ceiling by 15 within the exact published bounds.",
+      "reason": "REGISTRY_UPDATED_EXACTLY_ONCE",
+      "state": "CONSUMED",
+      "verdict": "COMPLIANT"
+    }
+  },
+  "replay_post": {
+    "counts": {
+      "changes": 1,
+      "policies": 1,
+      "version": "PARAM_SEAL_V3"
+    },
+    "policy": {
+      "active": true,
+      "commit": "97c13dc9355898adf13b03271457f83c0e608b28",
+      "max_delta": 20,
+      "maximum": 200,
+      "minimum": 50,
+      "parameter": "debt_ceiling",
+      "path": "samples/risk-policy.md",
+      "protocol_key": "1c1d68a9fa2b2c3643cd600a20a301d8c5a91657e01f013941086c4007a110a6",
+      "publisher": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+      "repository": "macdon3202/ParamSeal",
+      "source_digest": "e2090bbd7a8d537d66f95cb1475bd9f094e5aa3b2dec1f6f2351d9da6ff021e0",
+      "version": 1
+    },
+    "registry": 115,
+    "change": {
+      "attempts": 1,
+      "evaluator": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+      "new_value": 115,
+      "old_value": 100,
+      "parameter": "debt_ceiling",
+      "payload_digest": "d39afeb7e5adc4c12db731ca7eb24130e2858c83737ad7fe41106ae6fcf72742",
+      "policy_version": 1,
+      "proposer": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+      "protocol_key": "1c1d68a9fa2b2c3643cd600a20a301d8c5a91657e01f013941086c4007a110a6",
+      "rationale": "Increase debt_ceiling by 15 within the exact published bounds.",
+      "reason": "REGISTRY_UPDATED_EXACTLY_ONCE",
+      "state": "CONSUMED",
+      "verdict": "COMPLIANT"
+    }
+  }
+}

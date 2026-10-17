@@ -2,12 +2,12 @@
   "project": "ParamSeal",
   "contract_version": "PARAM_SEAL_V3",
   "runner": "v0.2.16",
-  "contract_address": null,
+  "contract_address": "0x8437c9d9FecbEcC8d0E4cdEDa6Fcbb4f0e5170b8",
   "network": "StudioNet",
   "contract_sha256": "e6502085a205ceed7eff646f232e34a5f6bd9f89e20432eea028688cd87a577f",
   "local_genvm_tests": 26,
   "frontend_tests": 6,
-  "live_verified": false,
+  "live_verified": true,
   "signed_browser_e2e": false,
   "deployer_authority": "NONE"
 }

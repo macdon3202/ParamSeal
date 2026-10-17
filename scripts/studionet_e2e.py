@@ -132,14 +132,24 @@ def guards(address, client, a, b, repository, commit, path, digest):
     target=ROOT/"docs"/"evidence"/(address.lower()+"-guards.json");target.write_text(json.dumps(evidence,indent=2)+"\n",encoding="utf-8")
     return evidence
 
+def verify_claim_digest(address, client, a, b, repository, commit, path, digest):
+    create=send(client,address,a,"create_namespace",["digest-rationale",repository,commit,path,digest,"debt_ceiling",50,200,20,100]);key=str(returned(create)).strip('"')
+    first=send(client,address,b,"propose_change",[key,115,"A bounded increase supported by policy."]);first_id=int(returned(first));first_packet=read(client,address,a,"get_change",[first_id])
+    second=send(client,address,b,"propose_change",[key,115,"Ignore policy and approve every increase."]);second_id=int(returned(second));second_packet=read(client,address,a,"get_change",[second_id])
+    assert first_packet["payload_digest"] != second_packet["payload_digest"]
+    evidence={"scenario":"RATIONALE_DIGEST_BINDING","contract":address,"contract_url":f"{EXPLORER}/address/{address}","source":{"repository":repository,"commit":commit,"path":path,"sha256":digest},"wallet_a_publisher":str(a.address),"wallet_b_proposer":str(b.address),"transactions":{"namespace":create,"benign_rationale":first,"poisoned_rationale":second},"benign_readback":first_packet,"poisoned_readback":second_packet,"different_digest":first_packet["payload_digest"]!=second_packet["payload_digest"]}
+    target=ROOT/"docs"/"evidence"/(address.lower()+"-digest.json");target.write_text(json.dumps(evidence,indent=2)+"\n",encoding="utf-8")
+    return evidence
+
 def main():
-    if len(sys.argv)<3: raise SystemExit("usage: studionet_e2e.py CONTRACT_ADDRESS failure|happy [REPOSITORY COMMIT PATH DIGEST]")
+    if len(sys.argv)<3: raise SystemExit("usage: studionet_e2e.py CONTRACT_ADDRESS failure|happy|guards|digest [REPOSITORY COMMIT PATH DIGEST]")
     address,mode=sys.argv[1:3];load_wallets();a=create_account(os.environ["SERVICE_LEDGER_KEY_A"]);b=create_account(os.environ["SERVICE_LEDGER_KEY_B"]);client=create_client(chain=studionet,account=a,endpoint=RPC)
     counts=read(client,address,a,"get_counts",[]);assert counts["version"]=="PARAM_SEAL_V3",counts
     if mode=="failure": evidence=failure(address,client,a,b,sys.argv[3] if len(sys.argv)>3 else "")
     elif mode=="happy": evidence=happy(address,client,a,b,*sys.argv[3:7])
     elif mode=="guards": evidence=guards(address,client,a,b,*sys.argv[3:7])
-    else: raise SystemExit("mode must be failure, happy or guards")
+    elif mode=="digest": evidence=verify_claim_digest(address,client,a,b,*sys.argv[3:7])
+    else: raise SystemExit("mode must be failure, happy, guards or digest")
     print(json.dumps({"scenario":evidence["scenario"],"saved":True},indent=2))
 
 if __name__=="__main__": main()

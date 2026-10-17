@@ -1,0 +1,543 @@
+{
+  "scenario": "GUARDS_CONFLICT_STALE_CANCEL",
+  "contract": "0x8437c9d9FecbEcC8d0E4cdEDa6Fcbb4f0e5170b8",
+  "contract_url": "https://explorer-studio.genlayer.com/address/0x8437c9d9FecbEcC8d0E4cdEDa6Fcbb4f0e5170b8",
+  "source": {
+    "repository": "macdon3202/ParamSeal",
+    "commit": "97c13dc9355898adf13b03271457f83c0e608b28",
+    "path": "samples/risk-policy.md",
+    "sha256": "e2090bbd7a8d537d66f95cb1475bd9f094e5aa3b2dec1f6f2351d9da6ff021e0"
+  },
+  "wallet_a": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+  "wallet_b": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+  "scenarios": {
+    "hard_bound": {
+      "transactions": {
+        "create": {
+          "hash": "0x3b5d965f6dc4dc88b032cf71f62efcde8cc37457f9365c7e6db1f57490602ec6",
+          "url": "https://explorer-studio.genlayer.com/tx/0x3b5d965f6dc4dc88b032cf71f62efcde8cc37457f9365c7e6db1f57490602ec6",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "execution": "SUCCESS",
+          "returned": "\"f2b4263326f602c060330abb0584acf0745af5d767c0c3a8b78a429fecda9fc7\""
+        },
+        "propose": {
+          "hash": "0xbdbc883076951bdc37ed977fd1d10039c9d11aee41efcf2f76f46baa9417e520",
+          "url": "https://explorer-studio.genlayer.com/tx/0xbdbc883076951bdc37ed977fd1d10039c9d11aee41efcf2f76f46baa9417e520",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "execution": "SUCCESS",
+          "returned": "3"
+        },
+        "seal": {
+          "hash": "0xe30cb03d08b43aae6b5646c9fe9d6425a97b5e2bf320349f7d26f93a1212374c",
+          "url": "https://explorer-studio.genlayer.com/tx/0xe30cb03d08b43aae6b5646c9fe9d6425a97b5e2bf320349f7d26f93a1212374c",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "execution": "SUCCESS",
+          "returned": "\"SEALED\""
+        },
+        "evaluate": {
+          "hash": "0x0d1d5017b07ce131b67acaaed495194107fd6cecfca8205d726e02e5d09c06c7",
+          "url": "https://explorer-studio.genlayer.com/tx/0x0d1d5017b07ce131b67acaaed495194107fd6cecfca8205d726e02e5d09c06c7",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "execution": "SUCCESS",
+          "returned": "\"REJECTED\""
+        },
+        "consume_rejected": {
+          "hash": "0x8921690b153b3b0e997c077dd77936f1106201a4eeebc79a40314e8b336ade81",
+          "url": "https://explorer-studio.genlayer.com/tx/0x8921690b153b3b0e997c077dd77936f1106201a4eeebc79a40314e8b336ade81",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "execution": "ERROR",
+          "returned": null
+        }
+      },
+      "readback": {
+        "counts": {
+          "changes": 3,
+          "policies": 3,
+          "version": "PARAM_SEAL_V3"
+        },
+        "policy": {
+          "active": true,
+          "commit": "97c13dc9355898adf13b03271457f83c0e608b28",
+          "max_delta": 20,
+          "maximum": 200,
+          "minimum": 50,
+          "parameter": "debt_ceiling",
+          "path": "samples/risk-policy.md",
+          "protocol_key": "f2b4263326f602c060330abb0584acf0745af5d767c0c3a8b78a429fecda9fc7",
+          "publisher": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+          "repository": "macdon3202/ParamSeal",
+          "source_digest": "e2090bbd7a8d537d66f95cb1475bd9f094e5aa3b2dec1f6f2351d9da6ff021e0",
+          "version": 1
+        },
+        "registry": 100,
+        "change": {
+          "attempts": 1,
+          "evaluator": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+          "new_value": 201,
+          "old_value": 100,
+          "parameter": "debt_ceiling",
+          "payload_digest": "51f77e55618dd5e92c08b6008f75a6e6e43aef1a08e7f200ecec67b0b91a98a9",
+          "policy_version": 1,
+          "proposer": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+          "protocol_key": "f2b4263326f602c060330abb0584acf0745af5d767c0c3a8b78a429fecda9fc7",
+          "rationale": "Attempt to exceed the exact maximum bound.",
+          "reason": "HARD_BOUND_VIOLATION",
+          "state": "REJECTED",
+          "verdict": "CONFLICTING"
+        }
+      },
+      "consume_pre": {
+        "counts": {
+          "changes": 3,
+          "policies": 3,
+          "version": "PARAM_SEAL_V3"
+        },
+        "policy": {
+          "active": true,
+          "commit": "97c13dc9355898adf13b03271457f83c0e608b28",
+          "max_delta": 20,
+          "maximum": 200,
+          "minimum": 50,
+          "parameter": "debt_ceiling",
+          "path": "samples/risk-policy.md",
+          "protocol_key": "f2b4263326f602c060330abb0584acf0745af5d767c0c3a8b78a429fecda9fc7",
+          "publisher": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+          "repository": "macdon3202/ParamSeal",
+          "source_digest": "e2090bbd7a8d537d66f95cb1475bd9f094e5aa3b2dec1f6f2351d9da6ff021e0",
+          "version": 1
+        },
+        "registry": 100,
+        "change": {
+          "attempts": 1,
+          "evaluator": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+          "new_value": 201,
+          "old_value": 100,
+          "parameter": "debt_ceiling",
+          "payload_digest": "51f77e55618dd5e92c08b6008f75a6e6e43aef1a08e7f200ecec67b0b91a98a9",
+          "policy_version": 1,
+          "proposer": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+          "protocol_key": "f2b4263326f602c060330abb0584acf0745af5d767c0c3a8b78a429fecda9fc7",
+          "rationale": "Attempt to exceed the exact maximum bound.",
+          "reason": "HARD_BOUND_VIOLATION",
+          "state": "REJECTED",
+          "verdict": "CONFLICTING"
+        }
+      },
+      "consume_post": {
+        "counts": {
+          "changes": 3,
+          "policies": 3,
+          "version": "PARAM_SEAL_V3"
+        },
+        "policy": {
+          "active": true,
+          "commit": "97c13dc9355898adf13b03271457f83c0e608b28",
+          "max_delta": 20,
+          "maximum": 200,
+          "minimum": 50,
+          "parameter": "debt_ceiling",
+          "path": "samples/risk-policy.md",
+          "protocol_key": "f2b4263326f602c060330abb0584acf0745af5d767c0c3a8b78a429fecda9fc7",
+          "publisher": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+          "repository": "macdon3202/ParamSeal",
+          "source_digest": "e2090bbd7a8d537d66f95cb1475bd9f094e5aa3b2dec1f6f2351d9da6ff021e0",
+          "version": 1
+        },
+        "registry": 100,
+        "change": {
+          "attempts": 1,
+          "evaluator": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+          "new_value": 201,
+          "old_value": 100,
+          "parameter": "debt_ceiling",
+          "payload_digest": "51f77e55618dd5e92c08b6008f75a6e6e43aef1a08e7f200ecec67b0b91a98a9",
+          "policy_version": 1,
+          "proposer": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+          "protocol_key": "f2b4263326f602c060330abb0584acf0745af5d767c0c3a8b78a429fecda9fc7",
+          "rationale": "Attempt to exceed the exact maximum bound.",
+          "reason": "HARD_BOUND_VIOLATION",
+          "state": "REJECTED",
+          "verdict": "CONFLICTING"
+        }
+      }
+    },
+    "stale_policy": {
+      "transactions": {
+        "create": {
+          "hash": "0x51353ba8a749a05afa8d1e1cf4154ae08d7c778116abbc6ea06a945c121e468d",
+          "url": "https://explorer-studio.genlayer.com/tx/0x51353ba8a749a05afa8d1e1cf4154ae08d7c778116abbc6ea06a945c121e468d",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "execution": "SUCCESS",
+          "returned": "\"363fb2cc757552cb7c33f819bd1b456bce71729d44dd57c1c3672850f1503cee\""
+        },
+        "propose": {
+          "hash": "0x1857e0ca85bb713b76b405c4692e0c67da72cee9fe1821732a1ba3fc73dd64a9",
+          "url": "https://explorer-studio.genlayer.com/tx/0x1857e0ca85bb713b76b405c4692e0c67da72cee9fe1821732a1ba3fc73dd64a9",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "execution": "SUCCESS",
+          "returned": "4"
+        },
+        "seal": {
+          "hash": "0x861d71ad0971ae18954828995d75689ab561efbc2a61000a342b4cd5af3e8131",
+          "url": "https://explorer-studio.genlayer.com/tx/0x861d71ad0971ae18954828995d75689ab561efbc2a61000a342b4cd5af3e8131",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "execution": "SUCCESS",
+          "returned": "\"SEALED\""
+        },
+        "revise": {
+          "hash": "0x1d3add79d8802d753d10806924c9f94727d7f7bf4a415269ede2fedad1edc3b4",
+          "url": "https://explorer-studio.genlayer.com/tx/0x1d3add79d8802d753d10806924c9f94727d7f7bf4a415269ede2fedad1edc3b4",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "execution": "SUCCESS",
+          "returned": "2"
+        },
+        "stale_evaluate": {
+          "hash": "0x3eb552310dc129ed64668f6a1132d2be40628961eac564959e16272bc6e21400",
+          "url": "https://explorer-studio.genlayer.com/tx/0x3eb552310dc129ed64668f6a1132d2be40628961eac564959e16272bc6e21400",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "execution": "ERROR",
+          "returned": null
+        }
+      },
+      "pre": {
+        "change": {
+          "attempts": 0,
+          "evaluator": "0x0000000000000000000000000000000000000000",
+          "new_value": 115,
+          "old_value": 100,
+          "parameter": "debt_ceiling",
+          "payload_digest": "c2997e344ece6d3d3ec87a83ec57d9521ecf5a3f3c4264f6a19480a628e9d84a",
+          "policy_version": 1,
+          "proposer": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+          "protocol_key": "363fb2cc757552cb7c33f819bd1b456bce71729d44dd57c1c3672850f1503cee",
+          "rationale": "Valid-looking update that will be made stale.",
+          "reason": "EXACT_PAYLOAD_FROZEN",
+          "state": "SEALED",
+          "verdict": ""
+        },
+        "registry": 100,
+        "policy_v1": {
+          "active": false,
+          "commit": "97c13dc9355898adf13b03271457f83c0e608b28",
+          "max_delta": 20,
+          "maximum": 200,
+          "minimum": 50,
+          "parameter": "debt_ceiling",
+          "path": "samples/risk-policy.md",
+          "protocol_key": "363fb2cc757552cb7c33f819bd1b456bce71729d44dd57c1c3672850f1503cee",
+          "publisher": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+          "repository": "macdon3202/ParamSeal",
+          "source_digest": "e2090bbd7a8d537d66f95cb1475bd9f094e5aa3b2dec1f6f2351d9da6ff021e0",
+          "version": 1
+        },
+        "policy_v2": {
+          "active": true,
+          "commit": "97c13dc9355898adf13b03271457f83c0e608b28",
+          "max_delta": 20,
+          "maximum": 200,
+          "minimum": 50,
+          "parameter": "debt_ceiling",
+          "path": "samples/risk-policy.md",
+          "protocol_key": "363fb2cc757552cb7c33f819bd1b456bce71729d44dd57c1c3672850f1503cee",
+          "publisher": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+          "repository": "macdon3202/ParamSeal",
+          "source_digest": "e2090bbd7a8d537d66f95cb1475bd9f094e5aa3b2dec1f6f2351d9da6ff021e0",
+          "version": 2
+        }
+      },
+      "post": {
+        "change": {
+          "attempts": 0,
+          "evaluator": "0x0000000000000000000000000000000000000000",
+          "new_value": 115,
+          "old_value": 100,
+          "parameter": "debt_ceiling",
+          "payload_digest": "c2997e344ece6d3d3ec87a83ec57d9521ecf5a3f3c4264f6a19480a628e9d84a",
+          "policy_version": 1,
+          "proposer": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+          "protocol_key": "363fb2cc757552cb7c33f819bd1b456bce71729d44dd57c1c3672850f1503cee",
+          "rationale": "Valid-looking update that will be made stale.",
+          "reason": "EXACT_PAYLOAD_FROZEN",
+          "state": "SEALED",
+          "verdict": ""
+        },
+        "registry": 100,
+        "policy_v1": {
+          "active": false,
+          "commit": "97c13dc9355898adf13b03271457f83c0e608b28",
+          "max_delta": 20,
+          "maximum": 200,
+          "minimum": 50,
+          "parameter": "debt_ceiling",
+          "path": "samples/risk-policy.md",
+          "protocol_key": "363fb2cc757552cb7c33f819bd1b456bce71729d44dd57c1c3672850f1503cee",
+          "publisher": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+          "repository": "macdon3202/ParamSeal",
+          "source_digest": "e2090bbd7a8d537d66f95cb1475bd9f094e5aa3b2dec1f6f2351d9da6ff021e0",
+          "version": 1
+        },
+        "policy_v2": {
+          "active": true,
+          "commit": "97c13dc9355898adf13b03271457f83c0e608b28",
+          "max_delta": 20,
+          "maximum": 200,
+          "minimum": 50,
+          "parameter": "debt_ceiling",
+          "path": "samples/risk-policy.md",
+          "protocol_key": "363fb2cc757552cb7c33f819bd1b456bce71729d44dd57c1c3672850f1503cee",
+          "publisher": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+          "repository": "macdon3202/ParamSeal",
+          "source_digest": "e2090bbd7a8d537d66f95cb1475bd9f094e5aa3b2dec1f6f2351d9da6ff021e0",
+          "version": 2
+        }
+      }
+    },
+    "cancellation": {
+      "transactions": {
+        "create": {
+          "hash": "0xb36ea0e2bf70ce9a5499d54a35950429c42bd0e3a6cc1c68069082a6f187cbad",
+          "url": "https://explorer-studio.genlayer.com/tx/0xb36ea0e2bf70ce9a5499d54a35950429c42bd0e3a6cc1c68069082a6f187cbad",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "execution": "SUCCESS",
+          "returned": "\"a7a3452fe54a71218ea51dad64044ca4a4d00a3cc72c1d252099b59140856f1c\""
+        },
+        "propose": {
+          "hash": "0x6725c54da4a6f844c3cce885913e1ac468c9be75e1cbdb0857513c62526ab55d",
+          "url": "https://explorer-studio.genlayer.com/tx/0x6725c54da4a6f844c3cce885913e1ac468c9be75e1cbdb0857513c62526ab55d",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "execution": "SUCCESS",
+          "returned": "5"
+        },
+        "seal": {
+          "hash": "0xe1137e29cabcfbf8fa48c456c2e631c6f8f01d45077e83934e2fac7dbb10f5f5",
+          "url": "https://explorer-studio.genlayer.com/tx/0xe1137e29cabcfbf8fa48c456c2e631c6f8f01d45077e83934e2fac7dbb10f5f5",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "execution": "SUCCESS",
+          "returned": "\"SEALED\""
+        },
+        "wrong_actor_cancel": {
+          "hash": "0x13d4c06ae1af49803ef2e57c4990d5dc4b867b53f4e6fd06da1d3566663f9990",
+          "url": "https://explorer-studio.genlayer.com/tx/0x13d4c06ae1af49803ef2e57c4990d5dc4b867b53f4e6fd06da1d3566663f9990",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "execution": "ERROR",
+          "returned": null
+        },
+        "proposer_cancel": {
+          "hash": "0xfb5fa9d063f70bfae9985e8819179d7fc29db513d06fe6188ba37cac6d278c51",
+          "url": "https://explorer-studio.genlayer.com/tx/0xfb5fa9d063f70bfae9985e8819179d7fc29db513d06fe6188ba37cac6d278c51",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "execution": "SUCCESS",
+          "returned": "\"CANCELLED\""
+        },
+        "post_cancel_evaluate": {
+          "hash": "0xc575f361bf8a9c54d298eabbc098771c179848ee9e9a4a00eed752fb1aeb0a12",
+          "url": "https://explorer-studio.genlayer.com/tx/0xc575f361bf8a9c54d298eabbc098771c179848ee9e9a4a00eed752fb1aeb0a12",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "execution": "ERROR",
+          "returned": null
+        }
+      },
+      "wrong_actor_pre": {
+        "counts": {
+          "changes": 5,
+          "policies": 6,
+          "version": "PARAM_SEAL_V3"
+        },
+        "policy": {
+          "active": true,
+          "commit": "97c13dc9355898adf13b03271457f83c0e608b28",
+          "max_delta": 20,
+          "maximum": 200,
+          "minimum": 50,
+          "parameter": "debt_ceiling",
+          "path": "samples/risk-policy.md",
+          "protocol_key": "a7a3452fe54a71218ea51dad64044ca4a4d00a3cc72c1d252099b59140856f1c",
+          "publisher": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+          "repository": "macdon3202/ParamSeal",
+          "source_digest": "e2090bbd7a8d537d66f95cb1475bd9f094e5aa3b2dec1f6f2351d9da6ff021e0",
+          "version": 1
+        },
+        "registry": 100,
+        "change": {
+          "attempts": 0,
+          "evaluator": "0x0000000000000000000000000000000000000000",
+          "new_value": 115,
+          "old_value": 100,
+          "parameter": "debt_ceiling",
+          "payload_digest": "3d497d1ce8d2c69b3d5204cd8a4791db26b7f9d1d4056410178a28918c79236a",
+          "policy_version": 1,
+          "proposer": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+          "protocol_key": "a7a3452fe54a71218ea51dad64044ca4a4d00a3cc72c1d252099b59140856f1c",
+          "rationale": "Packet used to prove actor and cancellation guards.",
+          "reason": "EXACT_PAYLOAD_FROZEN",
+          "state": "SEALED",
+          "verdict": ""
+        }
+      },
+      "wrong_actor_post": {
+        "counts": {
+          "changes": 5,
+          "policies": 6,
+          "version": "PARAM_SEAL_V3"
+        },
+        "policy": {
+          "active": true,
+          "commit": "97c13dc9355898adf13b03271457f83c0e608b28",
+          "max_delta": 20,
+          "maximum": 200,
+          "minimum": 50,
+          "parameter": "debt_ceiling",
+          "path": "samples/risk-policy.md",
+          "protocol_key": "a7a3452fe54a71218ea51dad64044ca4a4d00a3cc72c1d252099b59140856f1c",
+          "publisher": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+          "repository": "macdon3202/ParamSeal",
+          "source_digest": "e2090bbd7a8d537d66f95cb1475bd9f094e5aa3b2dec1f6f2351d9da6ff021e0",
+          "version": 1
+        },
+        "registry": 100,
+        "change": {
+          "attempts": 0,
+          "evaluator": "0x0000000000000000000000000000000000000000",
+          "new_value": 115,
+          "old_value": 100,
+          "parameter": "debt_ceiling",
+          "payload_digest": "3d497d1ce8d2c69b3d5204cd8a4791db26b7f9d1d4056410178a28918c79236a",
+          "policy_version": 1,
+          "proposer": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+          "protocol_key": "a7a3452fe54a71218ea51dad64044ca4a4d00a3cc72c1d252099b59140856f1c",
+          "rationale": "Packet used to prove actor and cancellation guards.",
+          "reason": "EXACT_PAYLOAD_FROZEN",
+          "state": "SEALED",
+          "verdict": ""
+        }
+      },
+      "cancelled": {
+        "counts": {
+          "changes": 5,
+          "policies": 6,
+          "version": "PARAM_SEAL_V3"
+        },
+        "policy": {
+          "active": true,
+          "commit": "97c13dc9355898adf13b03271457f83c0e608b28",
+          "max_delta": 20,
+          "maximum": 200,
+          "minimum": 50,
+          "parameter": "debt_ceiling",
+          "path": "samples/risk-policy.md",
+          "protocol_key": "a7a3452fe54a71218ea51dad64044ca4a4d00a3cc72c1d252099b59140856f1c",
+          "publisher": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+          "repository": "macdon3202/ParamSeal",
+          "source_digest": "e2090bbd7a8d537d66f95cb1475bd9f094e5aa3b2dec1f6f2351d9da6ff021e0",
+          "version": 1
+        },
+        "registry": 100,
+        "change": {
+          "attempts": 0,
+          "evaluator": "0x0000000000000000000000000000000000000000",
+          "new_value": 115,
+          "old_value": 100,
+          "parameter": "debt_ceiling",
+          "payload_digest": "3d497d1ce8d2c69b3d5204cd8a4791db26b7f9d1d4056410178a28918c79236a",
+          "policy_version": 1,
+          "proposer": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+          "protocol_key": "a7a3452fe54a71218ea51dad64044ca4a4d00a3cc72c1d252099b59140856f1c",
+          "rationale": "Packet used to prove actor and cancellation guards.",
+          "reason": "PROPOSER_CANCELLED",
+          "state": "CANCELLED",
+          "verdict": ""
+        }
+      },
+      "terminal_pre": {
+        "counts": {
+          "changes": 5,
+          "policies": 6,
+          "version": "PARAM_SEAL_V3"
+        },
+        "policy": {
+          "active": true,
+          "commit": "97c13dc9355898adf13b03271457f83c0e608b28",
+          "max_delta": 20,
+          "maximum": 200,
+          "minimum": 50,
+          "parameter": "debt_ceiling",
+          "path": "samples/risk-policy.md",
+          "protocol_key": "a7a3452fe54a71218ea51dad64044ca4a4d00a3cc72c1d252099b59140856f1c",
+          "publisher": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+          "repository": "macdon3202/ParamSeal",
+          "source_digest": "e2090bbd7a8d537d66f95cb1475bd9f094e5aa3b2dec1f6f2351d9da6ff021e0",
+          "version": 1
+        },
+        "registry": 100,
+        "change": {
+          "attempts": 0,
+          "evaluator": "0x0000000000000000000000000000000000000000",
+          "new_value": 115,
+          "old_value": 100,
+          "parameter": "debt_ceiling",
+          "payload_digest": "3d497d1ce8d2c69b3d5204cd8a4791db26b7f9d1d4056410178a28918c79236a",
+          "policy_version": 1,
+          "proposer": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+          "protocol_key": "a7a3452fe54a71218ea51dad64044ca4a4d00a3cc72c1d252099b59140856f1c",
+          "rationale": "Packet used to prove actor and cancellation guards.",
+          "reason": "PROPOSER_CANCELLED",
+          "state": "CANCELLED",
+          "verdict": ""
+        }
+      },
+      "terminal_post": {
+        "counts": {
+          "changes": 5,
+          "policies": 6,
+          "version": "PARAM_SEAL_V3"
+        },
+        "policy": {
+          "active": true,
+          "commit": "97c13dc9355898adf13b03271457f83c0e608b28",
+          "max_delta": 20,
+          "maximum": 200,
+          "minimum": 50,
+          "parameter": "debt_ceiling",
+          "path": "samples/risk-policy.md",
+          "protocol_key": "a7a3452fe54a71218ea51dad64044ca4a4d00a3cc72c1d252099b59140856f1c",
+          "publisher": "0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43",
+          "repository": "macdon3202/ParamSeal",
+          "source_digest": "e2090bbd7a8d537d66f95cb1475bd9f094e5aa3b2dec1f6f2351d9da6ff021e0",
+          "version": 1
+        },
+        "registry": 100,
+        "change": {
+          "attempts": 0,
+          "evaluator": "0x0000000000000000000000000000000000000000",
+          "new_value": 115,
+          "old_value": 100,
+          "parameter": "debt_ceiling",
+          "payload_digest": "3d497d1ce8d2c69b3d5204cd8a4791db26b7f9d1d4056410178a28918c79236a",
+          "policy_version": 1,
+          "proposer": "0xc67532aeF9D2879cBA9375a02E6217A3524657B8",
+          "protocol_key": "a7a3452fe54a71218ea51dad64044ca4a4d00a3cc72c1d252099b59140856f1c",
+          "rationale": "Packet used to prove actor and cancellation guards.",
+          "reason": "PROPOSER_CANCELLED",
+          "state": "CANCELLED",
+          "verdict": ""
+        }
+      }
+    }
+  }
+}

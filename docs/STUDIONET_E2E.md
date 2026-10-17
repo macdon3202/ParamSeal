@@ -1,52 +1,46 @@
 # StudioNet E2E evidence
 
-Status: **DEPLOYED — LIVE LIFECYCLE PENDING**
+Status: **V3 LIVE SUITE PASS**
 
-- Contract: [`0x78a7f78078A7f6BaF2D7cD764E9295B85a9fd6eB`](https://explorer-studio.genlayer.com/address/0x78a7f78078A7f6BaF2D7cD764E9295B85a9fd6eB)
-- Candidate source SHA-256: `d148bde64e91938f01f6f1e2f114cbc0800881c6efcd059f1d78af6117610c6c`
+- Current contract: [`0x8437c9d9FecbEcC8d0E4cdEDa6Fcbb4f0e5170b8`](https://explorer-studio.genlayer.com/address/0x8437c9d9FecbEcC8d0E4cdEDa6Fcbb4f0e5170b8)
+- Version: `PARAM_SEAL_V3`
+- Contract source SHA-256: `e6502085a205ceed7eff646f232e34a5f6bd9f89e20432eea028688cd87a577f`
+- Source commit: [`97c13dc9355898adf13b03271457f83c0e608b28`](https://github.com/macdon3202/ParamSeal/tree/97c13dc9355898adf13b03271457f83c0e608b28)
+- Policy source: [risk-policy.md at the same commit](https://raw.githubusercontent.com/macdon3202/ParamSeal/97c13dc9355898adf13b03271457f83c0e608b28/samples/risk-policy.md)
+- Policy SHA-256: `e2090bbd7a8d537d66f95cb1475bd9f094e5aa3b2dec1f6f2351d9da6ff021e0`
 
-No lifecycle transaction hash will be added until the corresponding transaction has finalized and its authoritative state has been read back.
+Auxiliary A `0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43` acted as publisher and evaluator. Auxiliary B `0xc67532aeF9D2879cBA9375a02E6217A3524657B8` acted as proposer, sealer and consumer. The main wallet deployed only.
 
-## Verified source-failure and rollback path
+## V3 happy path and replay
 
-Roles used:
-
-- Auxiliary A — namespace publisher and permissionless evaluator: `0xFeD97e2aE1A8C1983b7cA206B3545e6A2c685E43`
-- Auxiliary B — proposer and sealer: `0xc67532aeF9D2879cBA9375a02E6217A3524657B8`
-- Deployment wallet — no lifecycle transaction.
-
-| Step | Finalized transaction | Expected result |
+| Step | Finalized transaction | Result |
 |---|---|---|
-| Create isolated failure namespace | [`0x5afc…6a21`](https://explorer-studio.genlayer.com/tx/0x5afcf8a15fd96e99bb71239a02131fa835b1f5139060195c12708ec9f1316a21) | namespace created by auxiliary A |
-| Propose bounded change | [`0xd204…ba0e`](https://explorer-studio.genlayer.com/tx/0xd20414e2362e0248c0acc7b81a05ad71c36423e60b95b362d21453c6ccffba0e) | draft bound to auxiliary B and current value `100` |
-| Seal exact payload | [`0x56f4…157c`](https://explorer-studio.genlayer.com/tx/0x56f442e1e71d24b2805617bb3fa39ac0296a0c5a2aaea3e407186d67f6de157c) | state `SEALED` |
-| Evaluate using wrong digest | [`0xc7a8…ee43`](https://explorer-studio.genlayer.com/tx/0xc7a8607c9b7faf2b22b00648e4a64c767418d5feffc115826ff1fe2d4b1bee43) | finalized failure; full pre/post snapshot equality |
-| Evaluate unavailable source | [`0xe747…044e`](https://explorer-studio.genlayer.com/tx/0xe7472568fb10ee60277262240ab2b62a9d828c598022c4690126aea10a19044e) | `INSUFFICIENT / SEMANTIC_FACT_UNKNOWN` |
+| Create namespace | [`0xebf9…92bc`](https://explorer-studio.genlayer.com/tx/0xebf9e97e854a64b5ad87eda4d6e18d4546402f10ab0efaf6541821b371c692bc) | publisher A |
+| Propose exact update | [`0x01e7…39df`](https://explorer-studio.genlayer.com/tx/0x01e7baf590780d3f138aed2f3eee53369de26575197638fb31e4c1166c4e39df) | old `100`, new `115` |
+| Seal payload | [`0xbcf4…22f8`](https://explorer-studio.genlayer.com/tx/0xbcf40a9cf63fb341ae287f88883073f0753e87c81c22f13f290e47522d4722f8) | exact payload frozen |
+| Semantic evaluation | [`0x2795…2d17`](https://explorer-studio.genlayer.com/tx/0x279548bef88e28a639f125fced7a91b282a768fce11849914bc3f381c7922d17) | majority agree; `APPROVED` |
+| Consume permit | [`0xfaee…3ce5`](https://explorer-studio.genlayer.com/tx/0xfaeeee8243dd66a81bad6e2f0d4bcee7fc61e00b2263077e6af49de4aeb43ce5) | `CONSUMED`; registry `100 → 115` |
+| Replay consume | [`0x7252…9f36`](https://explorer-studio.genlayer.com/tx/0x7252acf9190a4c975d12cdd2b6983f8fe5117aa7a5bc2823c9886fadbef79f36) | finalized error; state unchanged |
 
-Authoritative final readback: registry remains `100`; no permit was activated. The full machine-readable receipt and snapshots are in [`docs/evidence/0x78a7...-failure.json`](./evidence/0x78a7f78078a7f6baf2d7cd764e9295b85a9fd6eb-failure.json).
+## V3 source failure
 
-This proves source failure and wrong-digest rollback only. It does not prove the happy path, which remains pending a public commit-pinned policy resource.
+- Wrong digest rollback: [`0x6b3f…09a7`](https://explorer-studio.genlayer.com/tx/0x6b3fd70747577853b1b0c8cdeb7ca66d8e2aa466222dadc1a26f8c239dbc09a7) — complete pre/post equality.
+- Missing source evaluation: [`0xa73e…2136`](https://explorer-studio.genlayer.com/tx/0xa73e909df5a4078c30b9350e59071fdc08cc75c52dede5950f9563c9a21f2136) — `INSUFFICIENT / SEMANTIC_FACT_UNKNOWN`; registry stays `100`.
 
-## V1 consensus regression discovered live
+## V3 conflict, stale policy and cancellation
 
-The first exact-source evaluation [`0xff63…9fe7`](https://explorer-studio.genlayer.com/tx/0xff630f97f7b36a44f661c6da64b0787c733056d7f943cb32a7ef2e8c990b9fe7) finalized as `MAJORITY_DISAGREE`. Authoritative readback remained `SEALED`, with `attempts=0` and registry `100`; no permit existed and no consumption was attempted.
+- Hard bound rejection evaluation: [`0x0d1d…06c7`](https://explorer-studio.genlayer.com/tx/0x0d1d5017b07ce131b67acaaed495194107fd6cecfca8205d726e02e5d09c06c7); blocked consume: [`0x8921…de81`](https://explorer-studio.genlayer.com/tx/0x8921690b153b3b0e997c077dd77936f1106201a4eeebc79a40314e8b336ade81). Registry stayed unchanged.
+- Policy revision: [`0x1d3a…c3b4`](https://explorer-studio.genlayer.com/tx/0x1d3add79d8802d753d10806924c9f94727d7f7bf4a415269ede2fedad1edc3b4); stale evaluation: [`0x3eb5…1400`](https://explorer-studio.genlayer.com/tx/0x3eb552310dc129ed64668f6a1132d2be40628961eac564959e16272bc6e21400) failed with pre/post equality.
+- Wrong actor cancel: [`0x13d4…9990`](https://explorer-studio.genlayer.com/tx/0x13d4c06ae1af49803ef2e57c4990d5dc4b867b53f4e6fd06da1d3566663f9990) failed with no mutation. Proposer cancel: [`0xfb5f…8c51`](https://explorer-studio.genlayer.com/tx/0xfb5fa9d063f70bfae9985e8819179d7fc29db513d06fe6188ba37cac6d278c51); post-cancel evaluation: [`0xc575…0a12`](https://explorer-studio.genlayer.com/tx/0xc575f361bf8a9c54d298eabbc098771c179848ee9e9a4a00eed752fb1aeb0a12) failed with no mutation.
 
-Validator diagnostics reported that reading storage-backed dataclasses in nondeterministic mode is unsupported. V2 therefore copies only bounded primitive policy/change fields during deterministic execution and passes those snapshots into the nondeterministic closure. A static regression assertion and the GenVM suite enforce this boundary. The historical V1 address is retained only as transparent failure evidence and must not be submitted as the current deployment.
+## V3 rationale digest binding
 
-## V2 behavioral validation and V3 digest audit
+Different rationales for otherwise identical proposals were submitted in [`0x77bb…be10`](https://explorer-studio.genlayer.com/tx/0x77bbcbd5cfd5010b57415d7e84d65e31d33c7ed2b14d2778c7fe705bb654be10) and [`0x844b…9926`](https://explorer-studio.genlayer.com/tx/0x844b3638e1b6879aabd68178d0c6caf796c6f10356b38d2d79ab629428839926). Readback confirms distinct payload digests.
 
-V2 contract [`0x1154…Bc8A`](https://explorer-studio.genlayer.com/address/0x1154Cfa6981eF0736298fd3a2EC447d7CAA7Bc8A) passed happy, single-use replay, source failure, hard-bound conflict, stale-policy, wrong-actor and cancellation lifecycle tests. During the subsequent claim-to-invariant audit, `rationale` was identified as semantic input that was stored and evaluated but not included in `payload_digest`. V3 binds it into the exact payload and adds a regression test proving two otherwise identical proposals with different rationales have different digests. V2 evidence remains historical validation, not the final submission deployment.
+Complete receipts and rollback snapshots: [happy](./evidence/0x8437c9d9fecbecc8d0e4cdeda6fcbb4f0e5170b8-happy.json), [failure](./evidence/0x8437c9d9fecbecc8d0e4cdeda6fcbb4f0e5170b8-failure.json), [guards](./evidence/0x8437c9d9fecbecc8d0e4cdeda6fcbb4f0e5170b8-guards.json), [digest binding](./evidence/0x8437c9d9fecbecc8d0e4cdeda6fcbb4f0e5170b8-digest.json).
 
-Required live sections:
+## Historical audit trail
 
-1. Exact deployed contract address, Explorer link and source SHA-256.
-2. Wallet-role table proving the deployer wallet performed deployment only.
-3. Commit-pinned policy resource and independently recomputed digest.
-4. Happy path: namespace, proposal, seal, evaluation, permit consumption and registry readback.
-5. Failure path: wrong source digest/unavailable source and no positive state.
-6. Conflict path: semantic conflict plus deterministic hard-bound rejection.
-7. Adversarial path: prompt injection, wrong actor, wrong digest, stale policy and stale registry.
-8. Replay/cancellation: double consume and post-cancel evaluation.
-9. Complete pre/post equality snapshots for every rejected transaction.
-10. Frontend reconciliation evidence distinguished from browser-wallet signing evidence.
-
+- V1 `0x78a7f78078A7f6BaF2D7cD764E9295B85a9fd6eB` had live majority disagreement because the nondeterministic callback read storage-backed dataclasses.
+- V2 `0x1154Cfa6981eF0736298fd3a2EC447d7CAA7Bc8A` passed lifecycle, then audit found rationale was not payload-bound.
+- V3 addresses both findings and is the only current submission deployment.
